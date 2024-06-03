@@ -19,6 +19,7 @@ const Icon = styled(FontAwesomeIcon)(
     duration,
     hoverScale,
     className,
+    iterations,
   }) => ({
     fontSize: size ? size : "1x",
     class: className,
@@ -27,6 +28,7 @@ const Icon = styled(FontAwesomeIcon)(
     hoverColor: isHovered ? hoverColor : color,
     transform: isHovered ? `scale(${hoverScale})` : "scale(1)",
     "--fa-animation-duration": duration + "s",
+    "--fa-animation-iteration-count": iterations,
   })
 );
 
@@ -47,6 +49,7 @@ function BounceIcon(props) {
       duration={props.duration ? props.duration : 1}
       hoverScale={props.hoverScale ? props.hoverScale : 1}
       sx={props.style}
+      iterations={props.iterations}
       bounce={
         props.animated
           ? props.animated
@@ -66,7 +69,8 @@ function App() {
         icon={faMusic}
         color={"red"}
         hoverColor={"slategrey"}
-        duration={3}
+        duration={0.75}
+        iterations={3}
         animateOnHover
       />
     </div>
