@@ -1,78 +1,52 @@
 import "./App.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 
-import React, { useState } from "react";
+import Icon, { baseSettings } from "./components/Icon.js";
+import {
+  faAddressCard,
+  faCog,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMusic } from "@fortawesome/free-solid-svg-icons";
-import { styled } from "@mui/material/styles";
+import React from "react";
 
-const Icon = styled(FontAwesomeIcon)(
-  ({
-    color,
-    hoverColor,
-    size,
-    isHovered,
-    duration,
-    hoverScale,
-    className,
-    iterations,
-  }) => ({
-    fontSize: size ? size : "1x",
-    class: className,
-    transition: "all 0.3 ease-in-out",
-    color: isHovered ? hoverColor : color ? color : "white",
-    hoverColor: isHovered ? hoverColor : color,
-    transform: isHovered ? `scale(${hoverScale})` : "scale(1)",
-    "--fa-animation-duration": duration + "s",
-    "--fa-animation-iteration-count": iterations,
-  })
-);
+const inner = {
+  ...baseSettings,
+  size: { defaultSize: "1x", hoverScale: 1.1 },
+  color: { defaultColor: "pink", hoverColor: "red" },
+  animation: {
+    name: "bounce",
+    alwaysAnimated: true,
+    duration: 1,
+    cursor: "pointer",
+    stackPosition: "1x",
+    "land-scale-x": "1.9",
+    "land-scale-y": "1.9",
+    height: "-0.5rem",
+  },
+};
 
-function BounceIcon(props) {
-  const [isHovered, setIsHovered] = useState(false);
-  const handleHover = () => setIsHovered(!isHovered);
-
-  return (
-    <Icon
-      icon={props.icon}
-      isHovered={isHovered}
-      className={props.class}
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
-      size={props.size ? props.size : "1x"}
-      color={props.color}
-      hoverColor={props.hoverColor}
-      duration={props.duration ? props.duration : 1}
-      hoverScale={props.hoverScale ? props.hoverScale : 1}
-      sx={props.style}
-      iterations={props.iterations}
-      bounce={
-        props.animated
-          ? props.animated
-          : props.animateOnHover
-          ? isHovered
-          : isHovered
-      }
-    />
-  );
-}
+const outer = {
+  ...baseSettings,
+  size: { defaultSize: "1x", hoverScale: 1.1 },
+  color: { defaultColor: "palevioletred", hoverColor: "palevioletred" },
+  animation: {
+    name: "beat-fade",
+    alwaysAnimated: true,
+    duration: 1,
+    cursor: "pointer",
+    stackPosition: "2x",
+    opacity: "0.7",
+    scale: "1.1",
+  },
+};
 
 function App() {
   return (
     <div className="App">
-      <BounceIcon
-        class="BounceIcon"
-        icon={faMusic}
-        color={"red"}
-        hoverColor={"slategrey"}
-        duration={0.75}
-        iterations={3}
-        animateOnHover
-      />
+      <span className="fa-stack fa-2x Icon">
+        <Icon icon={faHeart} settings={outer} className="OuterIcon" />
+        <Icon icon={faHeart} settings={inner} className="Icon" />
+      </span>
     </div>
   );
 }

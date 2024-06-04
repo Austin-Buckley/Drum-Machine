@@ -1,10 +1,180 @@
 .App {
-  text-align: center;  
+  text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: calc(10px + 2vmin);
+}
+
+/* example buttons 
+
+//html
+<div className="App">
+  <span className="fa-stack fa-3x heart">
+    <Icon
+      icon={faHeart}
+      settings={heartSquareSettings}
+      className="heart icon"
+    />
+    <Icon icon={faHeart} settings={heartSettings} className="icon" />
+  </span>
+  <span className="fa-stack fa-5x cog">
+    <Icon
+      icon={faCog}
+      className=""
+      settings={cogSquareSettings}
+    />
+    <Icon
+      icon={faCog}
+      settings={cogSettings}
+      className="icon cog-icon fa-spin-reverse"
+    />
+  </span>
+  <span className="fa-stack fa-3x cog">
+    <Icon
+      icon={faCog}
+      className="fa-spin-reverse cog"
+      settings={cogSquareSettings}
+    />
+    <Icon icon={faCog} settings={cogSettings} className="icon" />
+  </span>
+</div>
+
+//js
+const heartAnimation = {
+  name: "bounce",
+  duration: 1,
+  timing: "ease-in-out",
+  "land-scale-x": "1.9",
+  "land-scale-y": "1.9",
+  height: "-0.5rem",
+  cursor: "pointer",
+  alwaysAnimated: true,
+  stackPosition: "1x",
+};
+
+const heartSettings = {
+  ...baseSettings,
+  color: { defaultColor: "lightpink", hoverColor: "red" },
+  size: { defaultSize: "1xs", hoverScale: 1.1 },
+  transition: { transDuration: 2, transEase: "linear" },
+  animation: { ...heartAnimation },
+};
+
+const cogSettings = {
+  ...baseSettings,
+  color: { defaultColor: "slategrey", hoverColor: "#4b5261" },
+  animation: {
+    name: "spin",
+    duration: 2,
+    timing: "ease-in-out",
+    "land-scale-x": "1.5",
+    "land-scale-y": "1.5",
+    height: "-0.5rem",
+    cursor: "pointer",
+    alwaysAnimated: true,
+    stackPosition: "1x",
+  },
+};
+
+const heartSquareSettings = {
+  ...baseSettings,
+  color: { defaultColor: "darkgrey", hoverColor: "#4b5261" },
+};
+
+const cogSquareSettings = {
+  ...baseSettings,
+  color: { defaultColor: "darkgrey", hoverColor: "#4b5261" },
+  animation: {
+    name: "spin",
+    duration: 5,
+    timing: "linear",
+    iterations: "infinite",
+    alwaysAnimated: true,
+    scale: "1.05",
+    stackPosition: "2x",
+  },
+};
+
+//css
+.cog {
+  transition: transform 0.3s ease-in-out, animation-duration 0.3s ease-in-out;
+}
+
+.cog:hover {
+  transform: scale(1.1);
+}
+.cog:hover > .icon {
+  animation-duration: 1s;
+}
+
+.cog:active > .icon {
+  animation-duration: 3s;
+}
+
+.cog:active {
+  transition: transform 0.05s ease-in-out;
+  animation-duration: 0.1s;
+  transform: scale(0.9);
+}
+
+.heart {
+  transition: transform 0.3s ease-in-out, animation-duration 0.3s ease-in-out;
+}
+
+
+.heart:hover {
+  transform: scale(1.3);
+}
+
+.heart:hover > .icon {
+  animation-duration: 0.75s;
+}
+
+.heart:active > .icon {
+  animation-duration: 0.5s;
+}
+
+.heart:active {
+  transition: transform 0.05s ease-in-out;
+  animation-duration: 0.1s;
+  transform: scale(0.9);
+}
+
+.cog-icon {
+  animation-delay: 1.25s;
+  animation-direction: alternate-reverse;
+}
+
+*/
+
+.Icon {
+  transition: transform 0.3s ease-in-out, animation-duration 0.3s ease-in-out;
+}
+
+.Icon:hover {
+  transform: scale(1.5);
+  animation-duration: 0.75s;
+}
+
+.Icon:active {
+  transform: scale(0.9);
+  animation-duration: 0.5s;
+}
+
+.Icon:active > .OuterIcon {
+  animation-duration: 0.25s;
+  color: palevioletred;
+}
+
+.Icon:hover > .OuterIcon {
+  animation-duration: 1.75s;
+  color: violet;
+}
+
+.OuterIcon:hover {
+  transform: scale(5);
 }
