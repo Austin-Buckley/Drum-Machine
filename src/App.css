@@ -2,10 +2,10 @@
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
 }
 
@@ -151,30 +151,50 @@ const cogSquareSettings = {
 
 */
 
-.Icon {
+.HeartButton {
   transition: transform 0.3s ease-in-out, animation-duration 0.3s ease-in-out;
 }
 
-.Icon:hover {
-  transform: scale(1.5);
+.HeartButton:hover {
+  transform: scale(1.1);
+}
+
+.HeartButton:active {
+  transition: transform 0.1s ease-in-out;
+  transform: scale(0.8);
+}
+
+.HeartButton:hover > .OuterIcon,
+.HeartButton:hover > .InnerIcon { 
   animation-duration: 0.75s;
 }
 
-.Icon:active {
-  transform: scale(0.9);
+.HeartButton:active > .OuterIcon,
+.HeartButton:active > .InnerIcon {
   animation-duration: 0.5s;
 }
 
-.Icon:active > .OuterIcon {
-  animation-duration: 0.25s;
-  color: palevioletred;
+.drum-machine {
+  border-radius: 1rem;
+  background: radial-gradient( #1A2027,transparent);
 }
 
-.Icon:hover > .OuterIcon {
-  animation-duration: 1.75s;
-  color: violet;
+.MuiGrid-item {
+  transition: transform 0.3s ease-in-out;
 }
 
-.OuterIcon:hover {
-  transform: scale(5);
+.MuiGrid-item:hover {
+  transform: scale(1.1);
+}
+
+.MuiGrid-item:active {
+  transform: scale(0.8);
+}
+
+.drum-pad {
+}
+
+.key-label, #display {
+  background-color: #282c34;
+  border-radius: 1rem;
 }

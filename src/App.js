@@ -1,52 +1,173 @@
 import "./App.css";
 
-import Icon, { baseSettings } from "./components/Icon.js";
-import {
-  faAddressCard,
-  faCog,
-  faHeart,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useRef } from "react";
 
-import React from "react";
+import Grid from "@mui/material/Grid";
+import HeartButton from "./components/HeartButton";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 
-const inner = {
-  ...baseSettings,
-  size: { defaultSize: "1x", hoverScale: 1.1 },
-  color: { defaultColor: "pink", hoverColor: "red" },
-  animation: {
-    name: "bounce",
-    alwaysAnimated: true,
-    duration: 1,
-    cursor: "pointer",
-    stackPosition: "1x",
-    "land-scale-x": "1.9",
-    "land-scale-y": "1.9",
-    height: "-0.5rem",
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#1A2027",
+  padding: theme.spacing(0.5),
+  margin: theme.spacing(1),
+  ...theme.typography.body2,
+  textAlign: "center",
+  color: "white",
+}));
+
+const audioClips = [
+  {
+    key: "Q",
+    name: "Heater 1",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Heater-1.mp3",
   },
-};
-
-const outer = {
-  ...baseSettings,
-  size: { defaultSize: "1x", hoverScale: 1.1 },
-  color: { defaultColor: "palevioletred", hoverColor: "palevioletred" },
-  animation: {
-    name: "beat-fade",
-    alwaysAnimated: true,
-    duration: 1,
-    cursor: "pointer",
-    stackPosition: "2x",
-    opacity: "0.7",
-    scale: "1.1",
+  {
+    key: "W",
+    name: "Heater 2",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Heater-2.mp3",
   },
-};
+  {
+    key: "E",
+    name: "Heater 3",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Heater-3.mp3",
+  },
+  {
+    key: "A",
+    name: "Heater 4",
+    source: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3",
+  },
+  {
+    key: "S",
+    name: "Clap",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Heater-6.mp3",
+  },
+  {
+    key: "D",
+    name: "Open-HH",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Dsc_Oh.mp3",
+  },
+  {
+    key: "Z",
+    name: "Kick-n'-Hat",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Kick_n_Hat.mp3",
+  },
+  {
+    key: "X",
+    name: "Kick",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/RP4_KICK_1.mp3",
+  },
+  {
+    key: "C",
+    name: "Closed-HH",
+    source:
+      "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Cev_H2.mp3",
+  },
+];
+
+function DrumPad({ clip, updateDisplay }) {
+  const audioRef = useRef(null);
+
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      updateDisplay(clip.name);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeydown = (event) => {
+      if (event.key.toUpperCase() === clip.key) {
+        playAudio();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeydown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, [clip.key]);
+
+  return (
+    <Grid item>
+      <Item className="drum-pad" id={clip.name} onClick={playAudio}>
+        <audio
+          className="clip"
+          ref={audioRef}
+          id={clip.key}
+          src={clip.source}
+        />
+        <HeartButton onClick={playAudio} />
+        <Typography>{clip.key}</Typography>
+      </Item>
+    </Grid>
+  );
+}
+
+function Drums({ updateDisplay }) {
+  const firstRow = audioClips.slice(0, 3);
+  const secondRow = audioClips.slice(3, 6);
+  const thirdRow = audioClips.slice(6, 9);
+
+  return (
+    <>
+      <Grid container>
+        {firstRow.map((clip, index) => (
+          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
+        ))}
+      </Grid>
+      <Grid container>
+        {secondRow.map((clip, index) => (
+          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
+        ))}
+      </Grid>
+      <Grid container>
+        {thirdRow.map((clip, index) => (
+          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
+        ))}
+      </Grid>
+    </>
+  );
+}
+
+function Display({ display }) {
+  return (
+    <Grid item>
+      <Item className="display">
+        <Typography id="display">{display}</Typography>
+      </Item>
+    </Grid>
+  );
+}
+
+function DrumMachine() {
+  const [display, setDisplay] = React.useState("Press a button to start");
+
+  const updateDisplay = (name) => {
+    setDisplay(name);
+  };
+
+  return (
+    <Grid className="drum-machine" id="drum-machine">
+      <Drums updateDisplay={updateDisplay} />
+      <Display display={display} />
+    </Grid>
+  );
+}
 
 function App() {
   return (
     <div className="App">
-      <span className="fa-stack fa-2x Icon">
-        <Icon icon={faHeart} settings={outer} className="OuterIcon" />
-        <Icon icon={faHeart} settings={inner} className="Icon" />
-      </span>
+      <DrumMachine />
     </div>
   );
 }

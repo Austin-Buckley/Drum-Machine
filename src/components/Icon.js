@@ -3,10 +3,10 @@ import IconWrapper from "./IconWrapper";
 export const baseSettings = {
   color: { defaultColor: "white", hoverColor: "slategrey" },
   size: { defaultSize: "1x", hoverScale: 1.1 },
-  transition: { transDuration: 0.5, transEase: "ease-in-out" },
+  transition: { transDuration: 1, transEase: "ease-in-out" },
   animation: {
     name: "beat-fade",
-    duration: 1.5,
+    duration: 1,
     timing: "ease-in-out",
     cursor: "pointer",
     alwaysAnimated: true,
