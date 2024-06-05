@@ -113,28 +113,23 @@ function DrumPad({ clip, updateDisplay }) {
   );
 }
 
-function Drums({ updateDisplay }) {
-  const firstRow = audioClips.slice(0, 3);
-  const secondRow = audioClips.slice(3, 6);
-  const thirdRow = audioClips.slice(6, 9);
+function DrumRow({ positions, updateDisplay }) {
+  const { start, end } = positions;
+  return (
+    <Grid container>
+      {audioClips.slice(start, end).map((clip, index) => (
+        <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
+      ))}
+    </Grid>
+  );
+}
 
+function Drums({ updateDisplay }) {
   return (
     <>
-      <Grid container>
-        {firstRow.map((clip, index) => (
-          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
-        ))}
-      </Grid>
-      <Grid container>
-        {secondRow.map((clip, index) => (
-          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
-        ))}
-      </Grid>
-      <Grid container>
-        {thirdRow.map((clip, index) => (
-          <DrumPad key={index} clip={clip} updateDisplay={updateDisplay} />
-        ))}
-      </Grid>
+      <DrumRow positions={{ start: 0, end: 3 }} updateDisplay={updateDisplay} />
+      <DrumRow positions={{ start: 3, end: 6 }} updateDisplay={updateDisplay} />
+      <DrumRow positions={{ start: 6, end: 9 }} updateDisplay={updateDisplay} />
     </>
   );
 }
